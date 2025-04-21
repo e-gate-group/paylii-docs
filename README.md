@@ -304,3 +304,112 @@ fetch(url, {
 7. The redirect_url will be used to redirect the user after payment completion
 8. If not provided, metadata fields will use their default values (countryCode: 'KWT', language: 'en')
 9. Customer info fields (name, email, phone) are required when customer_info is provided
+
+
+## Webhook Notifications
+
+The payment gateway will send webhook notifications to your callback URL to inform you about payment status changes. These notifications are sent via HTTP POST requests.
+
+### Webhook Endpoint
+
+```
+POST https://your-domain.com/webhook
+```
+
+### Webhook Payload
+
+```json
+{
+    "transaction_id": "string",
+    "status": "string",
+    "amount": "string",
+    "currency": "string",
+    "invoice_id": "string",
+    "timestamp": "string",
+    "metadata": {
+        "myfatoorah_data": {
+            "invoice_id": "string",
+            "payment_id": "string",
+            "customer_reference": "string",
+            "transaction_status": "string",
+            "payment_method": "string",
+            "base_currency": "string",
+            "display_currency": "string",
+            "pay_currency": "string",
+            "invoice_value_base": "string",
+            "invoice_value_display": "string",
+            "invoice_value_pay": "string"
+        }
+    }
+}
+```
+
+### Status Values
+
+| Status | Description |
+|--------|-------------|
+| completed | Payment was successfully completed |
+| failed | Payment failed or was declined |
+| cancelled | Payment was cancelled by the user |
+| authorized | Payment is authorized but not yet captured |
+| processing | Payment is being processed |
+
+### Security
+
+- Webhook requests are signed using HMAC SHA-256
+- The signature is sent in the `MyFatoorah-Signature` header
+- Validate the signature using your webhook secret key
+
+### Example Webhook Handler
+
+```python
+import hmac
+import hashlib
+import base64
+
+def verify_webhook_signature(payload, signature, secret):
+    # Sort payload keys alphabetically
+    ordered_parts = []
+    for key in sorted(payload.keys(), key=str.lower):
+        value = "" if payload[key] is None else payload[key]
+        ordered_parts.append(f"{key}={value}")
+    
+    ordered_string = ",".join(ordered_parts)
+    
+    # Generate signature
+    message_encoded = ordered_string.encode('utf8')
+    secret_encoded = secret.encode('utf8')
+    hmac_obj = hmac.new(secret_encoded, message_encoded, digestmod=hashlib.sha256)
+    calculated_signature = base64.b64encode(hmac_obj.digest()).decode('utf8')
+    
+    return calculated_signature == signature
+
+@app.route('/webhook', methods=['POST'])
+def webhook_handler():
+    signature = request.headers.get('MyFatoorah-Signature')
+    payload = request.get_json()
+    
+    # Verify signature
+    if not verify_webhook_signature(payload, signature, WEBHOOK_SECRET):
+        return jsonify({"error": "Invalid signature"}), 400
+    
+    # Process the webhook
+    transaction_id = payload['transaction_id']
+    status = payload['status']
+    
+    # Update your system based on the payment status
+    # ...
+    
+    return jsonify({"status": "success"})
+```
+
+### Best Practices
+
+1. Always verify the webhook signature
+2. Implement idempotency to handle duplicate webhooks
+3. Respond quickly to webhooks (within 5 seconds)
+4. Log all webhook events for debugging
+5. Handle all possible status values
+6. Keep your webhook secret secure
+7. Use HTTPS for your webhook endpoint
+8. Implement retry logic for failed webhook deliveries
