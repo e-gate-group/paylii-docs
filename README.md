@@ -88,7 +88,7 @@ This endpoint initiates a new payment transaction and returns a redirect URL to 
 | last_name | string | No | - | Customer's last name |
 | email | string | No | - | Customer's email address |
 | phone | string | No | - | Customer's phone number (without country code) |
-| countryCode | string | No | '+90' | country code |
+| countryCode | string | No | '+965' | country code |
 | country | string | No | - | Customer's country |
 | address | string | No | - | Customer's address |  
 
