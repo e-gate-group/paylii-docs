@@ -110,7 +110,6 @@ This endpoint initiates a new payment transaction and returns a redirect URL to 
 
 ```
 {
-    "transaction_id": "string",
     "redirect_url": "string"
 }
 ```
@@ -177,7 +176,7 @@ curl -X POST \
             "first_name": "John",
             "last_name": "Doe",
             "email": "john@example.com",
-            "phone": "+1234567890",
+            "phone": "34567890",
             "countryCode": "KWT",
             "country": "Kuwait",
             "address": "123 Main St"
@@ -221,7 +220,7 @@ data = {
             'first_name': 'John',
             'last_name': 'Doe',
             'email': 'john@example.com',
-            'phone': '+1234567890',
+            'phone': '34567890',
             'countryCode': 'KWT',
             'country': 'Kuwait',
             'address': '123 Main St'
@@ -261,7 +260,7 @@ const data = {
             first_name: 'John',
             last_name: 'Doe',
             email: 'john@example.com',
-            phone: '+1234567890',
+            phone: '34567890',
             countryCode: 'KWT',
             country: 'Kuwait',
             address: '123 Main St',
