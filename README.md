@@ -87,8 +87,8 @@ This endpoint initiates a new payment transaction and returns a redirect URL to 
 | first_name | string | No | - | Customer's first name |
 | last_name | string | No | - | Customer's last name |
 | email | string | No | - | Customer's email address |
-| phone | string | No | - | Customer's phone number |
-| countryCode | string | No | 'KWT' | ISO 3166-1 alpha-3 country code |
+| phone | string | No | - | Customer's phone number (without country code) |
+| countryCode | string | No | '+90' | country code |
 | country | string | No | - | Customer's country |
 | address | string | No | - | Customer's address |  
 
@@ -176,8 +176,8 @@ curl -X POST \
             "first_name": "John",
             "last_name": "Doe",
             "email": "john@example.com",
-            "phone": "34567890",
-            "countryCode": "KWT",
+            "phone": "553567890",
+            "countryCode": "+90",
             "country": "Kuwait",
             "address": "123 Main St"
         },
@@ -220,8 +220,8 @@ data = {
             'first_name': 'John',
             'last_name': 'Doe',
             'email': 'john@example.com',
-            'phone': '34567890',
-            'countryCode': 'KWT',
+            'phone': '5534567890',
+            'countryCode': '+90',
             'country': 'Kuwait',
             'address': '123 Main St'
         },
@@ -260,8 +260,8 @@ const data = {
             first_name: 'John',
             last_name: 'Doe',
             email: 'john@example.com',
-            phone: '34567890',
-            countryCode: 'KWT',
+            phone: '5534567890',
+            countryCode: '+90',
             country: 'Kuwait',
             address: '123 Main St',
         },
