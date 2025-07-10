@@ -6,7 +6,7 @@
 
 ```
 
-POST https://paylii.com/api/transactions/initiate_payment/
+POST https://pay.paylii.com/api/transactions/initiate_payment/
 
 ```
   
@@ -161,7 +161,7 @@ or
 
 ```bash
 curl -X POST \
-  'https://paylii.com/api/transactions/initiate_payment/' \
+  'https://pay.paylii.com/api/transactions/initiate_payment/' \
   -H 'X-API-Key: your-api-key' \
   -H 'Content-Type: application/json' \
   -d '{
@@ -203,7 +203,7 @@ curl -X POST \
 ```python
 import requests
   
-url = 'https://paylii.com/api/transactions/initiate_payment/'
+url = 'https://pay.paylii.com/api/transactions/initiate_payment/'
 headers = {
     'X-API-Key': 'your-api-key',
     'Content-Type': 'application/json'
@@ -247,7 +247,7 @@ print(response.json())
 ### JavaScript (fetch)
 
 ```javascript
-const url = 'https://paylii.com/api/transactions/initiate_payment/';
+const url = 'https://pay.paylii.com/api/transactions/initiate_payment/';
 const data = {
     amount: '100.00',
     currency: 'USD',
